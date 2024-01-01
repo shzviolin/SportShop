@@ -1,11 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "lPQ8Er7xpUbPCw8DjEoXxYiAw2NRZaHzHWWkBgqmqjvETEDzFEM96k8mpaaZ2wQ3Me1ALJgYlwrjpAvsUVS8IQ==",
+  "dgSpecHash": "9XB36UQlcmA5XHjEKWD9vZwEqr8SMmrDwV9YHfGEzydqEx4+KUKC1J97Gx7fItqfbhCC5swVwpyUWaH2O9p8hQ==",
   "success": true,
   "projectFilePath": "B:\\SportShop\\API\\API.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\aebra\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
+    "C:\\Users\\aebra\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\aebra\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\aebra\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.11\\microsoft.aspnetcore.openapi.7.0.11.nupkg.sha512",
+    "C:\\Users\\aebra\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\aebra\\.nuget\\packages\\microsoft.data.sqlite.core\\7.0.11\\microsoft.data.sqlite.core.7.0.11.nupkg.sha512",
     "C:\\Users\\aebra\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.11\\microsoft.entityframeworkcore.7.0.11.nupkg.sha512",
     "C:\\Users\\aebra\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\7.0.11\\microsoft.entityframeworkcore.abstractions.7.0.11.nupkg.sha512",

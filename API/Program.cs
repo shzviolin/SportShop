@@ -1,3 +1,4 @@
+using API.Helpers;
 using Core.Interfaces;
 using Infrastructure;
 using Infrastructure.Data;
@@ -6,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped(typeof(IGenereicRepository<>),(typeof(GenereicRepository<>)));
+builder.Services.AddAutoMapper(typeof(MappingProfiles));
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -29,6 +32,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseRouting();
+
+app.UseStaticFiles();
 
 app.UseHttpsRedirection();
 
