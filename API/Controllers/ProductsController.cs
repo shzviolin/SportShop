@@ -4,41 +4,49 @@ using Core.Interfaces;
 using Core.Specifications;
 using API.Dtos;
 using AutoMapper;
+using API.Helpers;
 
 namespace API.Controllers
 {
-    public class ProductController : BaseApiController
+    public class ProductsController : BaseApiController
     {
-        private readonly IGenereicRepository<Product> _productRepo;
+        private readonly IGenereicRepository<Product> _productsRepo;
         private readonly IGenereicRepository<ProductBrand> _productBrandRepo;
         private readonly IGenereicRepository<ProductType> _productTypeRepo;
         private readonly IMapper _mapper;
 
-        public ProductController(
-            IGenereicRepository<Product> productRepo,
+        public ProductsController(
+            IGenereicRepository<Product> productsRepo,
             IGenereicRepository<ProductBrand> productBrandRepo,
             IGenereicRepository<ProductType> productTypeRepo,
             IMapper mapper)
         {
-            _productRepo = productRepo;
+            _productsRepo = productsRepo;
             _productBrandRepo = productBrandRepo;
             _productTypeRepo = productTypeRepo;
             _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<ProductToReturnDto>>> GetProducts(string sort, int? brandId, int? typeId)
+        public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetProducts([FromQuery] ProductSpecParams productParams)
         {
-            var spec = new ProductsWithTypesAndBrandsSpecification(sort,brandId,typeId);
-            var products = await _productRepo.ListAsync(spec);
-            return Ok(_mapper.Map<IReadOnlyList<Product>,IReadOnlyList<ProductToReturnDto>>(products));
+            var spec = new ProductsWithTypesAndBrandsSpecification(productParams);
+            var countSpec = new ProductsWithFiltersForCountSpecification(productParams);
+
+            var totalItems = await _productsRepo.CountAsync(countSpec);
+            var products = await _productsRepo.ListAsync(spec);
+            
+            var data = _mapper.Map<IReadOnlyList<ProductToReturnDto>>(products);
+
+            return Ok(new Pagination<ProductToReturnDto>(productParams.PageIndex,
+                productParams.PageSize, totalItems, data));
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductToReturnDto>> GetProduct(int id)
         {
             var spec = new ProductsWithTypesAndBrandsSpecification(id);
-            var product = await _productRepo.GetEntityWithSpec(spec);
+            var product = await _productsRepo.GetEntityWithSpec(spec);
             return _mapper.Map<Product,ProductToReturnDto>(product);
         }
 
