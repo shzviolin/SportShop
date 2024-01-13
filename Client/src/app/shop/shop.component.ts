@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ShopService } from './shop.service';
 import { error } from 'console';
 import { CommonModule } from '@angular/common';
@@ -6,21 +6,34 @@ import { IProduct } from '../shared/models/product';
 import { ProductItemComponent } from './product-item/product-item.component';
 import { IBrand } from '../shared/models/brand';
 import { IProductType } from '../shared/models/productType';
-import { response } from 'express';
+import { ShopParams } from '../shared/models/shopParams';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { PagingHeaderComponent } from '../shared/components/paging-header/paging-header.component';
 
 @Component({
   selector: 'app-shop',
   standalone: true,
-  imports: [CommonModule, ProductItemComponent],
+  imports: [
+    CommonModule,
+    ProductItemComponent,
+    NgxPaginationModule,
+    PagingHeaderComponent,
+  ],
   templateUrl: './shop.component.html',
   styleUrl: './shop.component.scss',
 })
 export class ShopComponent {
+  @ViewChild('search', { static: true }) searchTerm!: ElementRef;
   products: IProduct[] = [];
   brands: IBrand[] = [];
   productTypes: IProductType[] = [];
-  brandIdSelected: number = 0;
-  productTypeIdSelected: number = 0;
+  shopParams = new ShopParams();
+  totalCount: number = 0;
+  sortOptions = [
+    { name: 'Alphabetical', value: 'name' },
+    { name: 'Price: Low to High', value: 'priceAsc' },
+    { name: 'Price: High to Low', value: 'priceDesc' },
+  ];
 
   constructor(private shopServive: ShopService) {}
 
@@ -31,16 +44,19 @@ export class ShopComponent {
   }
 
   getProducts() {
-    this.shopServive
-      .getProducts(this.brandIdSelected, this.productTypeIdSelected)
-      .subscribe(
-        (response) => {
-          if (response) this.products = response.data;
-        },
-        (error) => {
-          console.log(error);
+    this.shopServive.getProducts(this.shopParams).subscribe(
+      (response) => {
+        if (response) {
+          this.products = response.data;
+          this.shopParams.pageNumber = response.pageIndex;
+          this.shopParams.pageSize = response.pageSize;
+          this.totalCount = response.count;
         }
-      );
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   getBrands() {
@@ -66,12 +82,42 @@ export class ShopComponent {
   }
 
   onBrandSelected(brandId: number) {
-    this.brandIdSelected = brandId;
+    this.shopParams.brandId = brandId;
+    this.shopParams.pageNumber = 1;
     this.getProducts();
   }
 
-  onProducttypeSelected(productTypeId: number) {
-    this.productTypeIdSelected = productTypeId;
+  onProductTypeSelected(productTypeId: number) {
+    this.shopParams.productTypeId = productTypeId;
+    this.shopParams.pageNumber = 1;
+
+    this.getProducts();
+  }
+
+  onSortSelected(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+    this.shopParams.sort = value;
+    console.log(`Selected option: ${this.shopParams.sort}`);
+    this.getProducts();
+  }
+
+  onPageChanged(event: any) {
+    if (this.shopParams.pageNumber !== event) {
+      this.shopParams.pageNumber = event;
+      this.getProducts();
+    }
+  }
+
+  onSearch() {
+    this.shopParams.search = this.searchTerm.nativeElement.value;
+    this.shopParams.pageNumber = 1;
+    this.getProducts();
+  }
+
+  onReset() {
+    this.searchTerm.nativeElement.value = '';
+    this.shopParams = new ShopParams();
     this.getProducts();
   }
 }

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { CoreModule } from './core/core.module';
 import { ShopComponent } from './shop/shop.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
     selector: 'app-root',
@@ -13,7 +14,8 @@ import { ShopComponent } from './shop/shop.component';
       CommonModule,
       RouterOutlet,
       CoreModule,
-      ShopComponent
+      ShopComponent,
+      NgxPaginationModule
     ]
 })
 export class AppComponent implements OnInit {
