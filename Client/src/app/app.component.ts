@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { CoreModule } from './core/core.module';
 import { ShopComponent } from './shop/shop.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { HomeComponent } from './home/home.component';
 
 @Component({
     selector: 'app-root',
@@ -13,9 +14,10 @@ import { NgxPaginationModule } from 'ngx-pagination';
     imports: [
       CommonModule,
       RouterOutlet,
+      RouterLink,
       CoreModule,
-      ShopComponent,
-      NgxPaginationModule
+      NgxPaginationModule,
+      HomeComponent
     ]
 })
 export class AppComponent implements OnInit {

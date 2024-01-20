@@ -9,6 +9,7 @@ import { IProductType } from '../shared/models/productType';
 import { ShopParams } from '../shared/models/shopParams';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PagingHeaderComponent } from '../shared/components/paging-header/paging-header.component';
+import { ProductDetailsComponent } from './product-details/product-details.component';
 
 @Component({
   selector: 'app-shop',
@@ -16,6 +17,7 @@ import { PagingHeaderComponent } from '../shared/components/paging-header/paging
   imports: [
     CommonModule,
     ProductItemComponent,
+    ProductDetailsComponent,
     NgxPaginationModule,
     PagingHeaderComponent,
   ],
