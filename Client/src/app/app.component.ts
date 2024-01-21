@@ -5,6 +5,8 @@ import { CoreModule } from './core/core.module';
 import { ShopComponent } from './shop/shop.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { HomeComponent } from './home/home.component';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
     selector: 'app-root',
@@ -15,9 +17,9 @@ import { HomeComponent } from './home/home.component';
       CommonModule,
       RouterOutlet,
       RouterLink,
-      CoreModule,
       NgxPaginationModule,
-      HomeComponent
+      HomeComponent,
+      CoreModule,
     ]
 })
 export class AppComponent implements OnInit {
