@@ -6,6 +6,7 @@ import { ShopComponent } from './shop/shop.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { HomeComponent } from './home/home.component';
 import { ToastrService } from 'ngx-toastr';
+import { SectionHeaderComponent } from './core/section-header/section-header.component';
 
 
 @Component({
@@ -20,6 +21,7 @@ import { ToastrService } from 'ngx-toastr';
       NgxPaginationModule,
       HomeComponent,
       CoreModule,
+      SectionHeaderComponent
     ]
 })
 export class AppComponent implements OnInit {
