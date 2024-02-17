@@ -7,9 +7,10 @@ import { ProductItemComponent } from './product-item/product-item.component';
 import { IBrand } from '../shared/models/brand';
 import { IProductType } from '../shared/models/productType';
 import { ShopParams } from '../shared/models/shopParams';
-import { NgxPaginationModule } from 'ngx-pagination';
+
 import { PagingHeaderComponent } from '../shared/components/paging-header/paging-header.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-shop',
@@ -25,7 +26,7 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
   styleUrl: './shop.component.scss',
 })
 export class ShopComponent {
-  @ViewChild('search', { static: true }) searchTerm!: ElementRef;
+  @ViewChild('search', { static: false }) searchTerm!: ElementRef;
   products: IProduct[] = [];
   brands: IBrand[] = [];
   productTypes: IProductType[] = [];

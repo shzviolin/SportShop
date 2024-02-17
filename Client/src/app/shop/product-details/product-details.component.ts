@@ -20,7 +20,9 @@ export class ProductDetailsComponent {
     private shopService: ShopService,
     private activateRoute: ActivatedRoute,
     private bcService:BreadcrumbService 
-     ) {}
+     ) {
+      this.bcService.set('@productDetails','');
+     }
 
   ngOnInit(){
     this.loadProduct();
