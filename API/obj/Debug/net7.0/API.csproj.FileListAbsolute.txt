@@ -75,3 +75,5 @@ B:\SportShop\API\bin\Debug\net7.0\Core.pdb
 B:\SportShop\API\bin\Debug\net7.0\AutoMapper.dll
 B:\SportShop\API\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 B:\SportShop\API\bin\Debug\net7.0\API.staticwebassets.runtime.json
+B:\SportShop\API\bin\Debug\net7.0\Pipelines.Sockets.Unofficial.dll
+B:\SportShop\API\bin\Debug\net7.0\StackExchange.Redis.dll
