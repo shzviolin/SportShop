@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { IProduct } from '../../shared/models/product';
 import { ShopService } from '../shop.service';
-import { error } from 'console';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { BreadcrumbService } from 'xng-breadcrumb';
+import { PriceFormattingService } from '../../shared/shared-service';
+import { BasketService } from '../../basket/basket.service';
+
 
 @Component({
   selector: 'app-product-details',
@@ -15,24 +17,39 @@ import { BreadcrumbService } from 'xng-breadcrumb';
 })
 export class ProductDetailsComponent {
   product!: IProduct;
+  quantity = 1;
 
   constructor(
     private shopService: ShopService,
     private activateRoute: ActivatedRoute,
-    private bcService:BreadcrumbService 
-     ) {
-      this.bcService.set('@productDetails','');
-     }
+    private bcService: BreadcrumbService,
+    private basketService: BasketService,
+    public priceFormattingService: PriceFormattingService) {
+    this.bcService.set('@productDetails', '');
+  }
 
-  ngOnInit(){
+  ngOnInit() {
     this.loadProduct();
+  }
+
+  addItemToBasket() {
+    this.basketService.addItemToBasket(this.product, this.quantity)
+  }
+
+  incrementQuantity() {
+    this.quantity++;
+  }
+
+  decrementQuantity() {
+    if (this.quantity > 1)
+      this.quantity--;
   }
 
   loadProduct() {
     this.shopService.getProduct(+this.activateRoute.snapshot.paramMap.get('id')!).subscribe(
       (product) => {
         this.product = product;
-        this.bcService.set('@productDetails',product.name);
+        this.bcService.set('@productDetails', product.name);
       },
       (error) => {
         console.log(error);
@@ -40,7 +57,4 @@ export class ProductDetailsComponent {
     );
   }
 
-  formatPrice(price: number): string {
-    return '$' + price.toFixed(2);
-  }
 }

@@ -7,29 +7,42 @@ import { HomeComponent } from './home/home.component';
 import { SectionHeaderComponent } from './core/section-header/section-header.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { BasketService } from './basket/basket.service';
 
 @Component({
-    selector: 'app-root',
-    standalone: true,
-    templateUrl: './app.component.html',
-    styleUrl: './app.component.scss',
-    imports: [
-      CommonModule,
-      RouterOutlet,
-      RouterLink,
-      NgxPaginationModule,
-      HomeComponent,
-      CoreModule,
-      SectionHeaderComponent,
-      NgxSpinnerModule,
-      NgbModule
-    ]
+  selector: 'app-root',
+  standalone: true,
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    RouterLink,
+    NgxPaginationModule,
+    HomeComponent,
+    CoreModule,
+    SectionHeaderComponent,
+    NgxSpinnerModule,
+    NgbModule,
+  ],
 })
 export class AppComponent implements OnInit {
   title = 'Sport Shop';
 
-  constructor(){}
+  constructor(private basketService: BasketService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (typeof localStorage !== 'undefined') {
+      const basketId = localStorage.getItem('basket_id');
+      if (basketId) {
+        this.basketService.getBasket(basketId).subscribe(() => {
+          console.log('initialized basket');
+        }, error => {
+          console.log(error);
+        });
+      }
+    } else {
+      console.error('localStorage is not available.');
+    }
+  }
 }

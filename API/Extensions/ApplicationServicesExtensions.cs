@@ -14,8 +14,9 @@ namespace API.Extensions
 
             services.AddSingleton<IConnectionMultiplexer>(c =>
             {
-                var configuration = ConfigurationOptions.Parse(config.GetConnectionString("Redis"), true);
-                return ConnectionMultiplexer.Connect(configuration);
+                var options = ConfigurationOptions.Parse(config.GetConnectionString("Redis"));
+                options.AbortOnConnectFail=false;
+                return ConnectionMultiplexer.Connect(options);
             });
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IBasketRepository, BasketRepository>();
@@ -42,7 +43,10 @@ namespace API.Extensions
             {
                 opt.AddPolicy("CorsPolicy", policy =>
                 {
-                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
+                    policy.WithOrigins("http://localhost:4200")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials();
                 });
             });
 
