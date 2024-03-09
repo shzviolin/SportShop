@@ -9,3 +9,7 @@ API:
     1-Microsoft.AspNetCore.Authentication.JwtBearer
 Core:
     1-Microsoft.Extensions.Identity.Stores
+----------------------------------------------------------------------------------------
+Migration Commands:
+    *Create: dotnet ef migrations add IdentityInitial -p Infrastructure -s API -o Identity/Migrations -c AppIdentityDbContext
+    *Remove: dotnet ef migrations remove -p Infrastructure -s API -c AppIdentityDbContext
