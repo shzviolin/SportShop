@@ -4,6 +4,7 @@ using API.Middleware;
 using Core.Interfaces;
 using Infrastructure;
 using Infrastructure.Data;
+using Infrastructure.Identity;
 using Microsoft.EntityFrameworkCore;
 using StackExchange.Redis;
 
@@ -15,9 +16,12 @@ builder.Services.AddAutoMapper(typeof(MappingProfiles));
 // Add services to the container.
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<StoreContext>(x =>
-    x.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<StoreContext>(option =>
+    option.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddDbContext<AppIdentityDbContext>(option=>{
+    option.UseSqlite(builder.Configuration.GetConnectionString("IdentityConnection"));
+});
 
 builder.Services.AddApplicationServices(builder.Configuration);
 
