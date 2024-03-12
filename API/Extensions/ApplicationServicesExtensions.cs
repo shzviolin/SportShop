@@ -2,6 +2,7 @@ using API.Errors;
 using Core.Interfaces;
 using Infrastructure;
 using Infrastructure.Data;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using StackExchange.Redis;
 
@@ -18,6 +19,8 @@ namespace API.Extensions
                 options.AbortOnConnectFail=false;
                 return ConnectionMultiplexer.Connect(options);
             });
+
+            services.AddScoped<ITokenService,TokenService>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IBasketRepository, BasketRepository>();
             services.AddScoped(typeof(IGenereicRepository<>), (typeof(GenereicRepository<>)));

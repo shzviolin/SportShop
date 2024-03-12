@@ -13,3 +13,5 @@ Core:
 Migration Commands:
     *Create: dotnet ef migrations add IdentityInitial -p Infrastructure -s API -o Identity/Migrations -c AppIdentityDbContext
     *Remove: dotnet ef migrations remove -p Infrastructure -s API -c AppIdentityDbContext
+----------------------------------------------------------------------------------------
+We can check the jwt: https://jwt.io/
